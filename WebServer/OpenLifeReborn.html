@@ -1,49 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Welcome to Open Life Reborn</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Open Life Reborn</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<style>
-		body {
-			background-color: #000000;
-			max-width: 800px;
-			margin: auto;
-			padding: 10px;
-			color: white;
+		:root {
+			--bg-primary: #f8f9fa;
+			--bg-secondary: #ffffff;
+			--bg-card: #ffffff;
+			--accent: #7c5cff;
+			--accent-hover: #9333ea;
+			--text-primary: #1a1a2e;
+			--text-secondary: #4a4a5a;
+			--text-muted: #6b6b7b;
+			--border: #e2e2e8;
+			--success: #16a34a;
+			--warning: #d97706;
+			--danger: #dc2626;
 		}
-		table{
+		
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		
+		body {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+			background-color: var(--bg-primary);
+			color: var(--text-primary);
+			line-height: 1.6;
+		}
+		
+		.container {
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 2rem;
+		}
+		
+		h1 {
+			font-size: 2rem;
+			font-weight: 700;
+			margin-bottom: 0.5rem;
+			background: linear-gradient(135deg, var(--accent) 0%, #9333ea 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+		
+		h2 {
+			font-size: 1.25rem;
+			font-weight: 600;
+			margin: 1.5rem 0 1rem;
+			color: var(--text-primary);
+		}
+		
+		p {
+			margin-bottom: 0.75rem;
+			color: var(--text-secondary);
+		}
+		
+		a {
+			color: var(--accent);
+			text-decoration: none;
+		}
+		
+		a:hover {
+			color: var(--accent-hover);
+		}
+		
+		.nav-links {
+			margin: 1rem 0 2rem;
+		}
+		
+		.nav-links a {
+			margin-right: 1rem;
+			padding: 0.5rem 1rem;
+			background: var(--bg-secondary);
+			border-radius: 6px;
+			font-size: 0.875rem;
+			border: 1px solid var(--border);
+		}
+		
+		.nav-links a:hover {
+			background: var(--accent);
 			color: white;
-    		background-color: rgb(34, 34, 34);
+			border-color: var(--accent);
+		}
+		
+		.hero-image {
+			width: 100%;
+			border-radius: 12px;
+			margin: 1.5rem 0;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+		}
+		
+		.card {
+			background: var(--bg-card);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 1.5rem;
+			margin-bottom: 1.5rem;
+		}
+		
+		ul {
+			list-style: none;
+			padding-left: 0;
+		}
+		
+		ul li {
+			padding: 0.5rem 0;
+			padding-left: 1.5rem;
+			position: relative;
+			color: var(--text-secondary);
+		}
+		
+		ul li::before {
+			content: "•";
+			color: var(--accent);
+			position: absolute;
+			left: 0;
+			font-weight: bold;
+		}
+		
+		.rules li::before {
+			content: "1.";
+			color: var(--accent);
+			font-weight: 600;
+		}
+		
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: 0.875rem;
+			margin-top: 1rem;
+		}
+		
+		th, td {
+			padding: 0.75rem;
+			text-align: left;
+			border-bottom: 1px solid var(--border);
+		}
+		
+		th {
+			background: var(--bg-primary);
+			font-weight: 500;
+			color: var(--text-muted);
+			text-transform: uppercase;
+			font-size: 0.75rem;
+		}
+		
+		.footer {
+			text-align: center;
+			padding: 2rem 0;
+			color: var(--text-muted);
+			font-size: 0.875rem;
+			border-top: 1px solid var(--border);
+			margin-top: 2rem;
+		}
+		
+		@media (max-width: 600px) {
+			.container {
+				padding: 1rem;
+			}
+			h1 {
+				font-size: 1.5rem;
+			}
+			.hero-image {
+				width: 100%;
+			}
 		}
 	</style>
 </head>
 <body>
-	<h1>Welcome to Open Life Reborn</h1>
-	<p>Open Life Reborn is a free roleplay multiplayer civilisation building and survival game on the base of <a href="https://onehouronelife.com/">One Hour One Life</a> from Jason Rohrer. You can play Open Life Reborn for free with any One Hour One Life Client by entering OpenLifeReborn.com as a custom server with the default port 8005.</p>
+	<div class="container">
+		<h1>Welcome to Open Life Reborn</h1>
+	<p>Open Life Reborn is a free roleplay multiplayer civilisation building and survival game on the base of <a href="https://onehouronelife.com/">One Hour One Life</a> from Jason Rohrer. You can play Open Life Reborn for free with any One Hour One Life Client by entering <strong>OpenLifeReborn.com</strong> as a custom server with the default port 8005.</p>
 
 	<p>Feel welcome to join the <a href="https://discord.gg/XtVEA5RVjX">Discord Community</a>.</p>
 	
 	<p>In case you have no client you can use <a href="https://github.com/hetuw/OneLife/releases">This Free Client</a> at your own risk!</p>
 
 	<p>And most importantly have fun!</p>
-	<p>
+	
+	<div class="nav-links">
 		<a href="#Rules">Rules</a>
 		<a href="#Features">Features</a>
 		<a href="#Statistics">Statistics</a>
-	</p>
+	</div>
 
+	<!-- Banner image - using local logo -->
 	<center>
-		<a href="https://discord.gg/XtVEA5RVjX"><img src="https://media.discordapp.net/attachments/985999783778988092/1174076551336308766/OHOL-From-Dayemeg.png?ex=662d597f&is=662c07ff&hm=c48d1e53b23af9f79de2be437caaa1397200853d80a634de6d1bc9ee3023f8eb&=&format=webp&quality=lossless&width=1100&height=618" alt="Open Life Reborn by Dayemeg - Free OHOL"  width="720" height="405"></a>
-		<br><a href="https://www.instagram.com/dayemeg/">Much thx to Dayemeg for the banner!</a>
+		<img src="/static/images/logo.png" alt="Open Life Reborn" style="max-width: 100%; height: auto; border-radius: 12px; margin: 1.5rem 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 	</center>
+	
 	<h2 id="Rules">By playing you accept these rules:</h2>
-	<p>1. Have fun and make sure that also fellow players have fun!</p>
-	<p>2. Dive into the world and try to roleplay in a medieval fantasy setting<p>
-	<p>3. If you happen to be born as noble be a noble!</p>
-	<p>4. If you want to play an antagonist first ask the moderators in the <a href="https://discord.gg/XtVEA5RVjX">Discord Community</a></p>
-	<p>5. What happens in game happens in game but remember rule 1</p>
+	<ul class="rules">
+		<li>Have fun and make sure that also fellow players have fun!</li>
+		<li>Dive into the world and try to roleplay in a medieval fantasy setting</li>
+		<li>If you happen to be born as noble be a noble!</li>
+		<li>If you want to play an antagonist first ask the moderators in the <a href="https://discord.gg/XtVEA5RVjX">Discord Community</a></li>
+		<li>What happens in game happens in game but remember rule 1</li>
+	</ul>
+	
 	<h2 id="Features">Features:</h2>
 	<ul>
-		<li><a href="https://media.discordapp.net/attachments/985999783778988092/1113533142809198724/map.png?width=886&height=884">Round Map</a> with rivers, bridges mountains and oceans</li>
+		<li><a href="/static/images/map.png" target="_blank">Round Map</a> with rivers, bridges, mountains and oceans</li>
 		<li>No family iron, family wells, biome locking but with biome boni</li>
 		<li>Prestige score system based on eating Yummy food and taking care of your family</li>
 		<li>New combat system with different weapon damage / hit points</li>
@@ -53,7 +217,19 @@
 		<li>AI NPCs that can be hired and keep your family alive</li>
 		<li>AI takes over until you reconnect</li>
 	</ul>
+	
 	<p>Open Life Reborn is a community driven non commercial project. Use all links and linked software at your own risk! You can contact me at martin_auer(at).gmx.net or in above linked Discord</p>
+	
 	<h2 id="Statistics">Statistics</h2>
+
+	<!-- Dynamic stats will be inserted here by the server -->
+	${livingPlayerText}
+	${accountsText}
+	${foodText}
+	${lineageText}
+	
+	<div class="footer">
+		<p>Open Life Reborn &copy; 2024 — A community-driven project</p>
+	</div>
 </body>
 </html>

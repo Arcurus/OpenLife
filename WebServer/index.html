@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenLife Reborn - Statistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --accent: #7c5cff;
+            --accent-hover: #9473ff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #6b6b7b;
+            --border: #e2e2e8;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, #9333ea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle { color: var(--text-secondary); font-size: 1rem; }
+        
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .status-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            min-width: 140px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .status-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(124, 92, 255, 0.15);
+        }
+        
+        .status-value { font-size: 2rem; font-weight: 700; color: var(--accent); }
+        .status-label { font-size: 0.875rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        .season-badge {
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .season-spring { background: #22c55e20; color: #16a34a; }
+        .season-summer { background: #f59e0b20; color: #d97706; }
+        .season-autumn { background: #f9731620; color: #c2410c; }
+        .season-winter { background: #3b82f620; color: #2563eb; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title { font-size: 1.125rem; font-weight: 600; }
+        .card-body { padding: 0; overflow-x: auto; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--bg-secondary);
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        
+        tr:hover { background: var(--bg-secondary); }
+        
+        .rank {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .rank-1 { background: #fbbf24; color: #000; }
+        .rank-2 { background: #94a3b8; color: #000; }
+        .rank-3 { background: #cd7f32; color: #000; }
+        
+        .player-name { font-weight: 500; color: var(--text-primary); }
+        .prestige { color: var(--success); font-weight: 600; }
+        .coins { color: #fbbf24; font-weight: 500; }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+        
+        .loading { opacity: 0.5; }
+        .error { color: var(--danger); }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.75rem; }
+            .status-bar { gap: 1rem; }
+            .status-card { min-width: 100px; padding: 1rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>OpenLife Reborn</h1>
+            <p class="subtitle">Live Server Statistics</p>
+        </header>
+        
+        <div class="status-bar">
+            <div class="status-card">
+                <div class="status-value" id="players">-</div>
+                <div class="status-label">Players Online</div>
+            </div>
+            <div class="status-card">
+                <div class="status-value" id="ais">-</div>
+                <div class="status-label">AIs Active</div>
+            </div>
+            <div class="status-card">
+                <div class="status-value" id="starving">-</div>
+                <div class="status-label">Starving</div>
+            </div>
+            <div class="status-card">
+                <div class="status-value">
+                    <span class="season-badge" id="season-badge">-</span>
+                </div>
+                <div class="status-label">Season</div>
+            </div>
+            <div class="status-card">
+                <div class="status-value" id="score">-</div>
+                <div class="status-label">Total Score</div>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">👥 Online Players</span>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr><th>Name</th><th>Age</th><th>Prestige</th><th>Power</th></tr>
+                        </thead>
+                        <tbody id="players-table">
+                            <tr><td colspan="4" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">🏆 Leaderboard</span>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr><th>#</th><th>Name</th><th>Prestige</th><th>Coins</th></tr>
+                        </thead>
+                        <tbody id="leaderboard-table">
+                            <tr><td colspan="4" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">🍖 Food Statistics</span>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr><th>Food</th><th>% Eaten</th></tr>
+                        </thead>
+                        <tbody id="food-table">
+                            <tr><td colspan="2" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">💀 Death Causes</span>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr><th>Cause</th><th>Total</th><th>24h</th><th>1h</th></tr>
+                        </thead>
+                        <tbody id="deaths-table">
+                            <tr><td colspan="4" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>OpenLife Reborn - A community-driven OneHourOneLife server</p>
+            <p id="last-updated" class="last-updated"></p>
+        </footer>
+    </div>
+    
+    <script>
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/stats');
+                const stats = await res.json();
+                
+                // Update status bar
+                document.getElementById('players').textContent = stats.players || '0';
+                document.getElementById('ais').textContent = stats.ais || '0';
+                document.getElementById('starving').textContent = stats.starving || '0';
+                document.getElementById('score').textContent = stats.total_score || '0';
+                
+                const seasonBadge = document.getElementById('season-badge');
+                const season = stats.season || 'Unknown';
+                seasonBadge.textContent = season;
+                seasonBadge.className = 'season-badge season-' + season.toLowerCase();
+                
+                // Update players table
+                const playersTable = document.getElementById('players-table');
+                if (stats.players_list && stats.players_list.length > 0) {
+                    playersTable.innerHTML = stats.players_list.slice(0, 15).map(p => 
+                        '<tr><td class="player-name">' + p.name + '</td><td>' + p.age + '</td><td class="prestige">' + p.prestige + '</td><td>' + p.power + '</td></tr>'
+                    ).join('');
+                } else {
+                    playersTable.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No players online</td></tr>';
+                }
+                
+                // Update leaderboard
+                const lbTable = document.getElementById('leaderboard-table');
+                if (stats.leaderboard && stats.leaderboard.length > 0) {
+                    lbTable.innerHTML = stats.leaderboard.slice(0, 15).map((e, i) => {
+                        const rank = i + 1;
+                        const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : '';
+                        const rankHtml = rank <= 3 ? '<span class="rank ' + rankClass + '">' + rank + '</span>' : rank;
+                        return '<tr><td>' + rankHtml + '</td><td class="player-name">' + e.name + '</td><td class="prestige">' + e.prestige_female + '/' + e.prestige_male + '</td><td class="coins">' + e.coins + '</td></tr>';
+                    }).join('');
+                }
+                
+                // Update food table
+                const foodTable = document.getElementById('food-table');
+                if (stats.food && stats.food.length > 0) {
+                    foodTable.innerHTML = stats.food.slice(0, 12).map(f => 
+                        '<tr><td>' + f.food + '</td><td>' + f.percent + '</td></tr>'
+                    ).join('');
+                }
+                
+                // Update deaths table
+                const deathsTable = document.getElementById('deaths-table');
+                if (stats.deaths && stats.deaths.length > 0) {
+                    deathsTable.innerHTML = stats.deaths.slice(0, 12).map(d => 
+                        '<tr><td>' + d.cause + '</td><td>' + d.total + '</td><td>' + d.last_day + '</td><td>' + d.last_hour + '</td></tr>'
+                    ).join('');
+                }
+                
+                document.getElementById('last-updated').textContent = 'Last updated: ' + new Date().toLocaleTimeString();
+                
+            } catch (err) {
+                console.error('Error loading stats:', err);
+            }
+        }
+        
+        // Initial load
+        loadStats();
+        
+        // Auto-refresh every 60 seconds
+        setInterval(loadStats, 60000);
+    </script>
+</body>
+</html>
